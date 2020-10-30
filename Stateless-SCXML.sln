@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DBC3BFC7-8D76-4E5C-932B-9B527E8E26F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8A2BED20-9D41-448C-BBE3-B4DDADDF16C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stateless-SCXML", "src\Stateless-SCXML\Stateless-SCXML.csproj", "{4089ADF9-E082-4409-A6B9-E931928D8FA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4089ADF9-E082-4409-A6B9-E931928D8FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4089ADF9-E082-4409-A6B9-E931928D8FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4089ADF9-E082-4409-A6B9-E931928D8FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4089ADF9-E082-4409-A6B9-E931928D8FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4089ADF9-E082-4409-A6B9-E931928D8FA6} = {DBC3BFC7-8D76-4E5C-932B-9B527E8E26F6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {624171BC-3F38-49F5-8E25-CE426CBBABAD}
+	EndGlobalSection
+EndGlobal
