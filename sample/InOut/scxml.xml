@@ -1,0 +1,8 @@
+﻿<scxml initial="Outside" version="1.0" xmlns="http://www.w3.org/2005/07/scxml">
+  <state id="Outside">
+    <transition event="enter" target="Inside" />
+  </state>
+  <state id="Inside">
+    <transition event="exit" target="Outside" />
+  </state>
+</scxml>
