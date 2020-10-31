@@ -9,7 +9,7 @@ namespace StatelessSCXML
     {
         private readonly XmlDocument _xml;
 
-        private readonly List<string> _states = new List<string>();
+        private readonly List<SCXMLState> _states = new List<StatelessSCXML.SCXMLState>();
 
         public SCXMLToStateless(XmlDocument xml)
         {
@@ -20,45 +20,34 @@ namespace StatelessSCXML
             {
                 if (xnode.Name.Equals("state"))
                 {
-                    Console.Write("state: ");
-
                     var idAttr = xnode.Attributes.GetNamedItem("id");
-
                     if (idAttr != null)
                     {
-                        var id = idAttr.Value;
+                        var state = new SCXMLState(idAttr.Value);
+                        _states.Add(state);
 
+                        foreach (XmlNode childnode in xnode.ChildNodes)
+                        {
+                            if (childnode.Name.Equals("transition"))
+                            {
+                                var eventAttr = childnode.Attributes.GetNamedItem("event");
+                                var targetAttr = childnode.Attributes.GetNamedItem("target");
 
-                        _states.Add(id);
+                                if (eventAttr != null && targetAttr != null)
+                                {
+                                    var transition = new Transition(eventAttr.Value, targetAttr.Value);
+
+                                    state.Transitions.Add(transition);
+                                }
+                            }
+                            // TODO check if child node is not a transition => process
+                        }
                     }
                     else
-                    {
                         Console.WriteLine($"State doesn't have an id. Skipping.");
-                    }
                 }
 
-
-                if (xnode.Attributes.Count > 0)
-                {
-                    XmlNode attr = xnode.Attributes[0];
-                    if (attr != null)
-                        Console.WriteLine(attr.Value);
-                }
-                // обходим все дочерние узлы элемента user
-                foreach (XmlNode childnode in xnode.ChildNodes)
-                {
-                    // если узел - company
-                    if (childnode.Name == "transition")
-                    {
-                        Console.WriteLine($"transition: {childnode.InnerText}");
-                    }
-                    // если узел age
-                    if (childnode.Name == "age")
-                    {
-                        Console.WriteLine($"Возраст: {childnode.InnerText}");
-                    }
-                }
-                Console.WriteLine();
+                // TODO other root nodes (not states)
             }
         }
 
@@ -69,15 +58,9 @@ namespace StatelessSCXML
 
         private enum Trigger { Enter, Exit }
 
-        public Type GetStates()
-        {
-            return typeof(State);
-        }
+        public Type StateType => typeof(State);
 
-        public Type GetEvents()
-        {
-            return typeof(Trigger);
-        }
+        public Type EventType => typeof(Trigger);
 
         public object GetStateMachine()
         {

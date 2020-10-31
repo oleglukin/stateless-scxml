@@ -19,8 +19,8 @@ namespace InOut
             xml.Load("scxml.xml");
 
             var parser = new SCXMLToStateless(xml);
-            Type state = parser.GetStates();
-            Type events = parser.GetEvents();
+            Type state = parser.StateType;
+            Type events = parser.EventType;
             object machine = parser.GetStateMachine();
 
             //IPerson person2 = new PersonSCXML<state, events>();
