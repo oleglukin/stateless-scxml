@@ -1,35 +1,28 @@
 ﻿using Stateless;
+using StatelessSCXML;
 using System;
+using System.Linq;
 
 namespace InOut
 {
-    class PersonSCXML<TState, TEvent> : IPerson
-        where TState : Enum
-        where TEvent : Enum
+    class PersonSCXML : IPerson
     {
-        private readonly StateMachine<TState, TEvent> _machine;
+        private readonly StateMachine<SCXMLState, Transition> _machine;
 
-        public PersonSCXML(object machine)
-        {
-            _machine = (StateMachine<TState, TEvent>)machine;
-        }
+        public PersonSCXML(StateMachine<SCXMLState, Transition> machine) => _machine = machine;
 
-        public void DisplayState() => Console.WriteLine($"Person is {_machine.State}");
+        public void DisplayState() => Console.WriteLine($"Person is {_machine.State.Name}");
 
         public void Enter()
         {
-            if (Enum.TryParse(typeof(TEvent), "enter", true, out object? trigger))
-                _machine.Fire((TEvent)trigger);
-            else
-                throw new Exception($"{nameof(TEvent)} does not have 'enter' event");
+            var trigger = _machine.PermittedTriggers.Where(t => t.Event.Equals("enter")).First();
+            _machine.Fire(trigger);
         }
 
         public void Exit()
         {
-            if (Enum.TryParse(typeof(TEvent), "exit", true, out object? trigger))
-                _machine.Fire((TEvent)trigger);
-            else
-                throw new Exception($"{nameof(TEvent)} does not have 'exit' event");
+            var trigger = _machine.PermittedTriggers.Where(t => t.Event.Equals("exit")).First();
+            _machine.Fire(trigger);
         }
     }
 }

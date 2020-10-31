@@ -19,15 +19,9 @@ namespace InOut
             xml.Load("scxml.xml");
 
             var parser = new SCXMLToStateless(xml);
-            Type state = parser.StateType;
-            Type events = parser.EventType;
-            object machine = parser.GetStateMachine();
+            var machine = parser.CreateStateMachine();
 
-            //IPerson person2 = new PersonSCXML<state, events>();
-
-            Type personType = typeof(PersonSCXML<,>).MakeGenericType(state, events);
-            IPerson person2 = (IPerson)Activator.CreateInstance(personType, machine);
-
+            IPerson person2 = new PersonSCXML(machine);
             TestPerson(person2);
 
             Console.ReadKey();

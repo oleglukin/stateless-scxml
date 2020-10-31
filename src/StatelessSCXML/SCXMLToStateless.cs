@@ -1,21 +1,39 @@
 ﻿using Stateless;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 
 namespace StatelessSCXML
 {
     public class SCXMLToStateless
     {
-        private readonly XmlDocument _xml;
-
-        private readonly List<SCXMLState> _states = new List<StatelessSCXML.SCXMLState>();
+        private readonly List<SCXMLState> _states = new List<SCXMLState>();
+        private readonly SCXMLState _initialState;
 
         public SCXMLToStateless(XmlDocument xml)
         {
-            _xml = xml;
             var root = xml.DocumentElement;
 
+            // create states first
+            foreach (XmlNode xnode in root)
+            {
+                if (xnode.Name.Equals("state"))
+                {
+                    var idAttr = xnode.Attributes.GetNamedItem("id"); // check if this can be done with XPath
+                    if (idAttr != null)
+                    {
+                        var state = new SCXMLState(idAttr.Value);
+                        _states.Add(state);
+                    }
+                    else
+                        Console.WriteLine($"State doesn't have an id. Skipping.");
+                }
+                // TODO other root nodes (not states)
+            }
+
+            // create transitions
+            // TODO see if this can be done without going through all nodes (e.g. proper XPath)
             foreach (XmlNode xnode in root)
             {
                 if (xnode.Name.Equals("state"))
@@ -23,8 +41,7 @@ namespace StatelessSCXML
                     var idAttr = xnode.Attributes.GetNamedItem("id");
                     if (idAttr != null)
                     {
-                        var state = new SCXMLState(idAttr.Value);
-                        _states.Add(state);
+                        var state = _states.Where(s => s.Name.Equals(idAttr.Value)).First();
 
                         foreach (XmlNode childnode in xnode.ChildNodes)
                         {
@@ -35,45 +52,42 @@ namespace StatelessSCXML
 
                                 if (eventAttr != null && targetAttr != null)
                                 {
-                                    var transition = new Transition(eventAttr.Value, targetAttr.Value);
-
+                                    var targetState = _states.Where(s => s.Name.Equals(targetAttr.Value)).First();
+                                    var transition = new Transition(eventAttr.Value, targetState);
                                     state.Transitions.Add(transition);
                                 }
                             }
                             // TODO check if child node is not a transition => process
                         }
                     }
-                    else
-                        Console.WriteLine($"State doesn't have an id. Skipping.");
                 }
-
-                // TODO other root nodes (not states)
             }
+
+            var initialAttr = root.Attributes.GetNamedItem("initial");
+            string initialStateStr = initialAttr?.Value ?? string.Empty;
+            _initialState = _states.Where(st => st.Name.Equals(initialStateStr)).First(); // TODO check if it cannot be found
         }
 
 
-
-
-        private enum State { Inside, Outside }
-
-        private enum Trigger { Enter, Exit }
-
-        public Type StateType => typeof(State);
-
-        public Type EventType => typeof(Trigger);
-
-        public object GetStateMachine()
+        /// <summary>
+        /// Configure each state
+        /// </summary>
+        /// <returns>Stateless state machine</returns>
+        public StateMachine<SCXMLState, Transition> CreateStateMachine()
         {
-            // TODO implement machine configuration
-            var machine = new StateMachine<State, Trigger>(State.Outside);
+            var machine = new StateMachine<SCXMLState, Transition>(_initialState);
 
-            machine.Configure(State.Outside)
-                .Permit(Trigger.Enter, State.Inside)
-                .Ignore(Trigger.Exit);
+            _states.ForEach(s =>
+            {
+                s.Transitions.ForEach(t => machine.Configure(s).Permit(t, t.Target));
 
-            machine.Configure(State.Inside)
-                .Permit(Trigger.Exit, State.Outside)
-                .Ignore(Trigger.Enter);
+                // ignore all other triggers
+                _states
+                    .SelectMany(state => state.Transitions) // all transitions from all states
+                    .Where(transition => !s.Transitions.Contains(transition)) // other transitions that are not in this state
+                    .ToList()
+                    .ForEach(ot => machine.Configure(s).Ignore(ot));
+            });
 
             return machine;
         }
