@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Stateless-SCXML\Stateless-SCXML.csproj" />
+    <ProjectReference Include="..\..\src\StatelessSCXML\StatelessSCXML.csproj" />
   </ItemGroup>
 
   <ItemGroup>

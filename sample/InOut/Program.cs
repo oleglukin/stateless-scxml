@@ -1,5 +1,6 @@
 ﻿using StatelessSCXML;
 using System;
+using System.Xml;
 
 namespace InOut
 {
@@ -7,14 +8,17 @@ namespace InOut
     {
         static void Main(string[] args)
         {
-            Console.Write("Creating person state machine using C# code:");
+            Console.WriteLine("Creating person state machine using C# code:");
             var person1 = new Person();
             TestPerson(person1);
 
-            Console.Write("\n\nCreating person state machine from SCXML:");
+            Console.WriteLine("\n\nCreating person state machine from SCXML:");
 
-            // TODO provide SCXML input
-            var parser = new SCXMLToStateless();
+            // Provide SCXML input
+            var xml = new XmlDocument();
+            xml.Load("scxml.xml");
+
+            var parser = new SCXMLToStateless(xml);
             Type state = parser.GetStates();
             Type events = parser.GetEvents();
             object machine = parser.GetStateMachine();
