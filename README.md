@@ -4,6 +4,6 @@ Refer to issue [387](https://github.com/dotnet-state-machine/stateless/issues/38
 
 
 ## Useful links
-[Qt SCXML Examples](https://doc.qt.io/qt-5/examples-qtscxml.html)
-[JSSCxml](https://jsscxml.org) SCXML Viewer
-[SCION tutorials](https://scion.scxml.io/tutorials/fundamentals)
+[Qt SCXML Examples](https://doc.qt.io/qt-5/examples-qtscxml.html)  
+[JSSCxml](https://jsscxml.org) SCXML Viewer  
+[SCION tutorials](https://scion.scxml.io/tutorials/fundamentals)  
