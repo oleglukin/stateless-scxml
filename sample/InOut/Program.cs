@@ -6,11 +6,11 @@ namespace InOut
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             Console.WriteLine("Creating person state machine using C# code:");
             var person1 = new Person();
-            TestPerson(person1);
+            TestPersonStates(person1);
 
             Console.WriteLine("\n\nCreating person state machine from SCXML:");
 
@@ -21,13 +21,14 @@ namespace InOut
             var parser = new SCXMLToStateless(xml);
             var machine = parser.CreateStateMachine();
 
-            IPerson person2 = new PersonSCXML(machine);
-            TestPerson(person2);
+            var person2 = new PersonSCXML(machine);
+            TestPersonStates(person2);
 
             Console.ReadKey();
         }
 
-        private static void TestPerson(IPerson person1)
+        // Display states, trigger transition events
+        private static void TestPersonStates(IPerson person1)
         {
             person1.DisplayState();
 

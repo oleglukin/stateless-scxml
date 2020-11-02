@@ -3,7 +3,7 @@ using System;
 
 namespace InOut
 {
-    // The simplest possible use of state machine, configured the usual way
+    // The simplest possible use of state machine, configured the usual way (programmatically)
     class Person : IPerson
     {
         // a person can be outside or inside a building

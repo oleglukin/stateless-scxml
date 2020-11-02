@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace InOut
 {
+    // This state machine is received from the SCXMLToStateless compiler
     class PersonSCXML : IPerson
     {
         private readonly StateMachine<SCXMLState, Transition> _machine;

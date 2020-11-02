@@ -6,11 +6,18 @@ using System.Xml;
 
 namespace StatelessSCXML
 {
+    /// <summary>
+    /// SCXML document to Stateless state machine compiler
+    /// </summary>
     public class SCXMLToStateless
     {
         private readonly List<SCXMLState> _states = new List<SCXMLState>();
         private readonly SCXMLState _initialState;
 
+        /// <summary>
+        /// Parse input SCXML file into list of states and transitions
+        /// </summary>
+        /// <param name="xml">Input SCXML document</param>
         public SCXMLToStateless(XmlDocument xml)
         {
             var root = xml.DocumentElement;
@@ -70,7 +77,7 @@ namespace StatelessSCXML
 
 
         /// <summary>
-        /// Configure each state
+        /// Compile Stateless state machine based on data parsed from the input SCXML document
         /// </summary>
         /// <returns>Stateless state machine</returns>
         public StateMachine<SCXMLState, Transition> CreateStateMachine()

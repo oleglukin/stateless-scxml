@@ -5,6 +5,9 @@ using Xunit;
 
 namespace StatelessSCXML.Tests
 {
+    /// <summary>
+    /// Test simple scenario (simple valid SCXML) for SCXML to Stateless state machine compiler
+    /// </summary>
     public class SimpleMachine
     {
         private readonly string scxml = @"
@@ -47,7 +50,7 @@ namespace StatelessSCXML.Tests
         {
             var trigger = machine.PermittedTriggers.Where(t => t.Event.Equals("enter")).First();
             machine.Fire(trigger);
-            machine.Fire(trigger);
+            machine.Fire(trigger); // trigger the same event again
             Assert.True(machine.State.Name.Equals("Inside"),
                 "Enter event triggered twice, it is expected to transition into the Inside state and stay there");
         }
