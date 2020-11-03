@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InOut", "sample\InOut\InOut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatelessSCXML", "src\StatelessSCXML\StatelessSCXML.csproj", "{0D837FAE-4562-449F-AE56-F5719596DCFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatelessSCXML.Tests", "test\StatelessSCXML.Tests\StatelessSCXML.Tests.csproj", "{C1A6FF05-6558-4C0B-B310-6BAD3785D38B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatelessSCXML.Tests", "test\StatelessSCXML.Tests\StatelessSCXML.Tests.csproj", "{C1A6FF05-6558-4C0B-B310-6BAD3785D38B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamer", "sample\Gamer\Gamer.csproj", "{F1AF00FE-86FA-49D4-9EFC-FD5C7A174176}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C1A6FF05-6558-4C0B-B310-6BAD3785D38B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1A6FF05-6558-4C0B-B310-6BAD3785D38B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1A6FF05-6558-4C0B-B310-6BAD3785D38B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1AF00FE-86FA-49D4-9EFC-FD5C7A174176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1AF00FE-86FA-49D4-9EFC-FD5C7A174176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1AF00FE-86FA-49D4-9EFC-FD5C7A174176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1AF00FE-86FA-49D4-9EFC-FD5C7A174176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +47,7 @@ Global
 		{1C7629E5-710A-4EA2-A67C-F941D529C453} = {FB57EE90-01D2-439D-B1DC-BBF4DD1E176D}
 		{0D837FAE-4562-449F-AE56-F5719596DCFC} = {DBC3BFC7-8D76-4E5C-932B-9B527E8E26F6}
 		{C1A6FF05-6558-4C0B-B310-6BAD3785D38B} = {8A2BED20-9D41-448C-BBE3-B4DDADDF16C3}
+		{F1AF00FE-86FA-49D4-9EFC-FD5C7A174176} = {FB57EE90-01D2-439D-B1DC-BBF4DD1E176D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {624171BC-3F38-49F5-8E25-CE426CBBABAD}
