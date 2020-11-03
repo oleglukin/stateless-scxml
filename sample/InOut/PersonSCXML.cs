@@ -1,7 +1,6 @@
 ﻿using Stateless;
 using StatelessSCXML;
 using System;
-using System.Linq;
 
 namespace InOut
 {
@@ -14,16 +13,8 @@ namespace InOut
 
         public void DisplayState() => Console.WriteLine($"Person is {_machine.State.Name}");
 
-        public void Enter()
-        {
-            var trigger = _machine.PermittedTriggers.Where(t => t.Event.Equals("enter")).First();
-            _machine.Fire(trigger);
-        }
+        public void Enter() => _machine.RaiseEvent("enter");
 
-        public void Exit()
-        {
-            var trigger = _machine.PermittedTriggers.Where(t => t.Event.Equals("exit")).First();
-            _machine.Fire(trigger);
-        }
+        public void Exit() => _machine.RaiseEvent("exit");
     }
 }
