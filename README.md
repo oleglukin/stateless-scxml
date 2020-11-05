@@ -28,6 +28,9 @@ var machine = parser.CreateStateMachine();
 // trigger machine events like this:
 var trigger = machine.PermittedTriggers.Where(t => t.Event.Equals("enter")).First();
 machine.Fire(trigger);
+
+// or like this:
+machine.RaiseEvent("enter");
 ```
 
 The state machine compiled from SCXML would be equivalent to manual configuration like this:
