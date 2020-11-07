@@ -4,8 +4,12 @@ using Xunit;
 
 namespace StatelessSCXML.Tests
 {
-    public class EventsTest
+    /// <summary>
+    /// Tests to make sure that SCXMLToStateless can parse transitions with multiple events
+    /// </summary>
+    public class MultipleEvents
     {
+        // This SCXML has a transition (from Moving state) that has multiple events
         private readonly string scxml = @"
             <scxml initial=""Idle"" version=""1.0"" xmlns=""http://www.w3.org/2005/07/scxml"">
               <state id=""Idle"">
@@ -18,7 +22,7 @@ namespace StatelessSCXML.Tests
 
         private readonly StateMachine<SCXMLState, Transition> machine;
 
-        public EventsTest()
+        public MultipleEvents()
         {
             var xml = new XmlDocument();
             xml.LoadXml(scxml);
