@@ -1,0 +1,20 @@
+﻿<scxml initial="Offline" version="1.0" xmlns="http://www.w3.org/2005/07/scxml">
+  <state id="Offline">
+    <transition event="connect.start" target="Connecting" />
+  </state>
+  <state id="Connecting">
+    <onentry>
+      <send event="DisplayMessage" />
+    </onentry>
+    <transition event="connect.cancel" target="Offline" />
+    <transition event="timeout" target="Offline" />
+    <transition event="connected" target="Online" />
+  </state>
+  <state id="Online">
+    <transition event="disconnect quit" target="Offline" />
+
+    <state id="InGame" />
+    <state id="Monitoring" />
+
+  </state>
+</scxml>
