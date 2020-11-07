@@ -4,7 +4,7 @@
   </state>
   <state id="Connecting">
     <onentry>
-      <send event="DisplayMessage" />
+      <send event="Gamer.Program.DisplayMessage" />
     </onentry>
     <transition event="connect.cancel" target="Offline" />
     <transition event="timeout" target="Offline" />

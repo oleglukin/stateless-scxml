@@ -17,6 +17,11 @@ namespace StatelessSCXML
         /// </summary>
         public List<Transition> Transitions { get; } = new List<Transition>();
 
+        /// <summary>
+        /// Method name to invoke on entering this state
+        /// </summary>
+        public string OnEntry { get; set; }
+
         public SCXMLState(string name) => Name = name;
     }
 }
