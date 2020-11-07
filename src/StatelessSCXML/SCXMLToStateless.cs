@@ -57,11 +57,20 @@ namespace StatelessSCXML
                                 var eventAttr = childnode.Attributes.GetNamedItem("event");
                                 var targetAttr = childnode.Attributes.GetNamedItem("target");
 
-                                if (eventAttr != null && targetAttr != null)
+                                if (!string.IsNullOrWhiteSpace(eventAttr?.Value) &&
+                                    !string.IsNullOrWhiteSpace(targetAttr?.Value))
                                 {
                                     var targetState = _states.Where(s => s.Name.Equals(targetAttr.Value)).First();
-                                    var transition = new Transition(eventAttr.Value, targetState);
-                                    state.Transitions.Add(transition);
+
+                                    var events = eventAttr.Value.Split(' ')
+                                            .Select(s => s.Trim())
+                                            .Where(s => !string.IsNullOrWhiteSpace(s));
+                                    
+                                    foreach (var evnt in events)
+                                    {
+                                        var transition = new Transition(evnt, targetState);
+                                        state.Transitions.Add(transition);
+                                    }
                                 }
                             }
                             // TODO check if child node is not a transition => process
