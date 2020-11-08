@@ -1,5 +1,4 @@
 ﻿using Stateless;
-using System;
 using System.Xml;
 using Xunit;
 
@@ -33,7 +32,7 @@ namespace StatelessSCXML.Tests
             var xml = new XmlDocument();
             xml.LoadXml(scxml);
             var parser = new SCXMLToStateless(xml);
-            machine = parser.CreateStateMachine(this);
+            machine = parser.CreateStateMachine(caller: this);
         }
 
         [Fact]
@@ -45,6 +44,9 @@ namespace StatelessSCXML.Tests
                 $"Expected to invoke {nameof(TestMethod)} and change {nameof(invoked)} property to true.");
         }
 
+        #pragma warning disable xUnit1013 // Public method should be marked as test (Fact)
         public static void TestMethod() => invoked = true;
+        
+        #pragma warning restore xUnit1013
     }
 }

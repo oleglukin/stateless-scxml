@@ -127,7 +127,7 @@ namespace StatelessSCXML
 
                     if (method != null)
                     {
-                        machine.Configure(s).OnEntry(t => method.Invoke(null, null));
+                        machine.Configure(s).OnEntry(t => method.Invoke(caller, null));
                     }
                 }
             });
