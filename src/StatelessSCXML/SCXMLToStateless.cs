@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Xml;
 
 namespace StatelessSCXML
@@ -73,7 +74,20 @@ namespace StatelessSCXML
                                     }
                                 }
                             }
-                            // TODO check if child node is not a transition => process
+                            else if (childnode.Name.Equals("onentry") && childnode.HasChildNodes)
+                            {
+                                foreach (XmlNode onentryChild in childnode.ChildNodes)
+                                {
+                                    if (onentryChild.Name.Equals("send"))
+                                    {
+                                        var eventAttr = onentryChild.Attributes?.GetNamedItem("event");
+                                        if (!string.IsNullOrWhiteSpace(eventAttr?.Value))
+                                        {
+                                            state.OnEntry = eventAttr.Value;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -85,11 +99,12 @@ namespace StatelessSCXML
         }
 
 
+
         /// <summary>
         /// Compile Stateless state machine based on data parsed from the input SCXML document
         /// </summary>
         /// <returns>Stateless state machine</returns>
-        public StateMachine<SCXMLState, Transition> CreateStateMachine()
+        public StateMachine<SCXMLState, Transition> CreateStateMachine(object caller = null)
         {
             var machine = new StateMachine<SCXMLState, Transition>(_initialState);
 
@@ -103,6 +118,18 @@ namespace StatelessSCXML
                     .Where(transition => !s.Transitions.Contains(transition)) // other transitions that are not in this state
                     .ToList()
                     .ForEach(ot => machine.Configure(s).Ignore(ot));
+
+                // configure OnEntry method invocation
+                if (!string.IsNullOrEmpty(s.OnEntry))
+                {
+                    Type type = caller?.GetType();
+                    MethodInfo method = type?.GetMethod(s.OnEntry);
+
+                    if (method != null)
+                    {
+                        machine.Configure(s).OnEntry(t => method.Invoke(caller, null));
+                    }
+                }
             });
 
             return machine;

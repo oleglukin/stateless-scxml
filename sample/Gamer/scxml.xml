@@ -4,17 +4,20 @@
   </state>
   <state id="Connecting">
     <onentry>
-      <send event="DisplayMessage" />
+      <send event="DisplayMessageConnecting" />
     </onentry>
     <transition event="connect.cancel" target="Offline" />
     <transition event="timeout" target="Offline" />
     <transition event="connected" target="Online" />
   </state>
   <state id="Online">
+    <onentry>
+      <send event="DisplayMessageConnected" />
+    </onentry>
+    
     <transition event="disconnect quit" target="Offline" />
 
     <state id="InGame" />
     <state id="Monitoring" />
-
   </state>
 </scxml>
